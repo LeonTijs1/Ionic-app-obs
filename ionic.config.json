@@ -1,0 +1,7 @@
+{
+  "name": "btV",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
