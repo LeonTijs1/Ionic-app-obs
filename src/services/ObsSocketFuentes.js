@@ -1,6 +1,5 @@
-const { IonButton } = require('@ionic/react');
+const { IonButton, IonList } = require('@ionic/react');
 
-//constate para las escenas
 const OBSFuente = ({fuente, verLista}) => {
 
     const OBSWebSocket = require('obs-websocket-js');
@@ -22,34 +21,37 @@ const OBSFuente = ({fuente, verLista}) => {
                 let lf = [];
                 const lista = data.sources;
                 for (let i=0; i < lista.length; i++) {
-                    lf.push(lista[i].name);}
+                    lf.push(lista[i]);
+                }
                 // uso de fn para cambiar el state de escenas
-                verLista(lf) 
+                verLista(lf)
             });
         });           
     }
 
-    //fn para cambiar la escena 
-    const cambioEsc = (fuente)=>{
-        Conectar().then(() => {
-            obs.send('SetSourceName', {"sourceName":fuente});
+    //fn para cambiar el render fuente (render es para a que vea y que no se vea)
+    const cambioFt = (fuente)=>{
+        Conectar().then(()=>{
+            fuente.render = !fuente.render;
+            obs.send('SetSceneItemRender', {source: fuente.name, render: fuente.render});
         });
-    }
+    };  
 
     //renderizacion (lo que vera el usuario)
-    return (
+    return (       
         <div>
-            <IonButton onClick={''} size='large'>Agregar Fuentes</IonButton>
-            <div>
-                <IonButton onClick={verFuentes} size='large'>Listado de Fuentes</IonButton>
-                {fuente.length > 0 &&
+            <IonButton onClick={verFuentes} expand = "full" >Listado de Fuentes</IonButton>
+                {fuente.length > 1 && 
                     <div>
+                        <li>
                         {fuente.map((esc, num=0) => (
-                        <IonButton id={esc} key={num+=1} class="fuente" onClick={(e) => cambioEsc(esc,e)}> {esc} </IonButton>
-                        ))}  
+                        <IonButton id={esc.name} key={num+=1} expand = "block" class="btn-escena" onClick={(e) => cambioFt(esc,e)}>
+                            {esc.name}
+                        </IonButton>
+                        ))} 
+                        </li> 
                     </div>    
-                }
-            </div>
+                }   
         </div>
     );
 };

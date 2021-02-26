@@ -11,13 +11,11 @@ const Escena: React.FC<ContainerProps> = () => {
     setEscenas(lista_escenas);
   }
 
-  return (   
-      <div> 
-        <ObsWebSocket_ 
-          scenes={scenes}
-          verLista={guardarEscenas}
-        />
-      </div>     
+  return (
+    <div>
+      <header> <h1>Su escenas en OBS</h1> </header>  
+      <ObsWebSocket_ scenes={scenes} verLista={guardarEscenas} />
+    </div>     
   );
 };
 

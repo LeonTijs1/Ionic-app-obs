@@ -1,0 +1,9 @@
+ion-content{
+    text-align: center;   
+    --background: #993cde;
+    --background: linear-gradient(132deg, #993cde 0%, #eb3076 41%, #f74042 66%, #ff6744 100%);
+}
+
+
+
+

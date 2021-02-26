@@ -1,6 +1,5 @@
 const { IonButton } = require('@ionic/react');
 
-//constate para las escenas
 const OBSEscenas = ({scenes, verLista}) => {
 
     const OBSWebSocket = require('obs-websocket-js');
@@ -38,16 +37,16 @@ const OBSEscenas = ({scenes, verLista}) => {
 
     //renderizacion (lo que vera el usuario)
     return (
-        <div>
-            <IonButton onClick={verEscenas} size='large'>Listado de Escenas</IonButton>
-            {scenes.length > 0 &&
+        <div>           
+            <IonButton onClick={verEscenas} expand = "full" >Listado de Escenas</IonButton>
+            {scenes.length > 1 &&
                 <div>
-                    {scenes.map((esc, num=0) => (
-                    <IonButton id={esc} key={num+=1} class="btn-escena" onClick={(e) => cambioEsc(esc,e)}>  
-                        {esc}
-                    </IonButton>
-                    ))}  
-                </div>    
+                    <li>
+                    {scenes.map((esc, num=0) => (    
+                    <IonButton id={esc} key={num+=1} expand = "block" class="btn-escena" onClick={(e) => cambioEsc(esc,e)}>{esc}</IonButton>
+                    ))} 
+                    </li> 
+                </div>              
             }
         </div>
     );
