@@ -31,9 +31,23 @@ const OBSEscenas = ({scenes, verLista}) => {
     //fn para cambiar la escena 
     const cambioEsc = (scenes)=>{
         Conectar().then(() => {
-            obs.send('SetCurrentScene', {"scene-name":scenes});
+            obs.send('SetCurrentScene', {"scene-name":scenes});           
         });
     }
+
+    //fn para la alerta
+    function presentAlert(scenes) {
+        if (scenes == scenes) {
+            const alert = document.createElement('ion-alert');
+            //Valores de la alerta
+            alert.header = 'Alerta';
+            alert.message = 'Ya esta en esta escena';
+            alert.buttons = ['OK'];
+            
+            document.body.appendChild(alert);
+            return alert.present();
+        }     
+      }
 
     //renderizacion (lo que vera el usuario)
     return (
@@ -43,7 +57,9 @@ const OBSEscenas = ({scenes, verLista}) => {
                 <div>
                     <li>
                     {scenes.map((esc, num=0) => (    
-                    <IonButton id={esc} key={num+=1} expand = "block" class="btn-escena" onClick={(e) => cambioEsc(esc,e)}>{esc}</IonButton>
+                        <IonButton id={esc} key={num+=1} expand = "block" class="btn-escena" onClick={ (e) => {cambioEsc(esc,e); presentAlert();} }>
+                            {esc}
+                        </IonButton>                        
                     ))} 
                     </li> 
                 </div>              
